@@ -1,13 +1,16 @@
 import React, { Component } from "react";
-import "./person-details.css";
+
 import SwapiService from "./../../services/swapi-service";
 import Spinner from "../spinner";
 import ErrorIndicator from "../error-indicator";
+import ErrorButton from "../error-button";
+
+import "./person-details.css";
 export default class PersonDetails extends Component {
   swapiService = new SwapiService();
 
   state = {
-    person: null,
+    person: {},
     isLoading: true,
     isError: false
   };
@@ -51,7 +54,7 @@ export default class PersonDetails extends Component {
   render() {
     const { person, isLoading, isError } = this.state;
     const hasData = !(isLoading || isError);
-    const loader = isLoading ? <Spinner /> : null;
+    const loader = isLoading && !isError ? <Spinner /> : null;
 
     const errorMessage = isError ? <ErrorIndicator /> : null;
     const content = hasData ? <PersonView person={person} /> : null;
@@ -91,6 +94,7 @@ const PersonView = ({ person }) => {
             <span>{eyeColor}</span>
           </li>
         </ul>
+        <ErrorButton />
       </div>
     </React.Fragment>
   );
