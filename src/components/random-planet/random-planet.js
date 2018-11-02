@@ -16,7 +16,7 @@ export default class RandomPlanet extends Component {
 
   componentDidMount() {
     this.updatePlanet();
-    this.interval = setInterval(this.updatePlanet, 13500);
+    this.interval = setInterval(this.updatePlanet, 15500);
   }
 
   componentWillUnmount() {
