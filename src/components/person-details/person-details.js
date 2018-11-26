@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, {Component} from "react";
 
 import SwapiService from "./../../services/swapi-service";
 import Spinner from "../spinner";
@@ -6,96 +6,97 @@ import ErrorIndicator from "../error-indicator";
 import ErrorButton from "../error-button";
 
 import "./person-details.css";
+
 export default class PersonDetails extends Component {
-  swapiService = new SwapiService();
+    swapiService = new SwapiService();
 
-  state = {
-    person: {},
-    isLoading: true,
-    isError: false
-  };
+    state = {
+        person: {},
+        isLoading: true,
+        isError: false
+    };
 
-  componentDidMount() {
-    this.updatePerson();
-  }
-
-  componentDidUpdate(prevProps) {
-    if (this.props.selectedPersonId !== prevProps.selectedPersonId) {
-      this.updatePerson();
-      this.setState({ isLoading: true });
-    }
-  }
-
-  updatePerson() {
-    const { selectedPersonId } = this.props;
-    if (!selectedPersonId) {
-      return;
+    componentDidMount() {
+        this.updatePerson();
     }
 
-    this.swapiService
-      .getPerson(selectedPersonId)
-      .then(this.onPesonLoader)
-      .catch(err => {
-        this.onError(err);
-      });
-  }
+    componentDidUpdate(prevProps) {
+        if (this.props.selectedPersonId !== prevProps.selectedPersonId) {
+            this.updatePerson();
+            this.setState({isLoading: true});
+        }
+    }
 
-  onError = err => {
-    this.setState({ isError: true, isLoading: false });
-  };
+    updatePerson() {
+        const {selectedPersonId} = this.props;
+        if (!selectedPersonId) {
+            return;
+        }
 
-  onPesonLoader = person => {
-    this.setState({
-      person,
-      isLoading: false
-    });
-  };
+        this.swapiService
+            .getPerson(selectedPersonId)
+            .then(this.onPesonLoader)
+            .catch(err => {
+                this.onError(err);
+            });
+    }
 
-  render() {
-    const { person, isLoading, isError } = this.state;
-    const hasData = !(isLoading || isError);
-    const loader = isLoading && !isError ? <Spinner /> : null;
+    onError = err => {
+        this.setState({isError: true, isLoading: false});
+    };
 
-    const errorMessage = isError ? <ErrorIndicator /> : null;
-    const content = hasData ? <PersonView person={person} /> : null;
+    onPesonLoader = person => {
+        this.setState({
+            person,
+            isLoading: false
+        });
+    };
 
-    return (
-      <div className="person-details card">
-        {errorMessage}
-        {loader}
-        {content}
-      </div>
-    );
-  }
+    render() {
+        const {person, isLoading, isError} = this.state;
+        const hasData = !(isLoading || isError);
+        const loader = isLoading && !isError ? <Spinner/> : null;
+
+        const errorMessage = isError ? <ErrorIndicator/> : null;
+        const content = hasData ? <PersonView person={person}/> : null;
+
+        return (
+            <div className="person-details card">
+                {errorMessage}
+                {loader}
+                {content}
+            </div>
+        );
+    }
 }
 
-const PersonView = ({ person }) => {
-  const { id, name, gender, birthYear, eyeColor } = person;
-  return (
-    <React.Fragment>
-      <img
-        className="person-image"
-        src={`https://starwars-visualguide.com/assets/img/characters/${id}.jpg`}
-      />
+const PersonView = ({person}) => {
+    const {id, name, gender, birthYear, eyeColor} = person;
+    return (
+        <React.Fragment>
+            <img
+                className="person-image"
+                src={`https://starwars-visualguide.com/assets/img/characters/${id}.jpg`}
+            />
 
-      <div className="card-body">
-        <h4>{name}</h4>
-        <ul className="list-group list-group-flush">
-          <li className="list-group-item">
-            <span className="term">Gender</span>
-            <span>{gender}</span>
-          </li>
-          <li className="list-group-item">
-            <span className="term">Birth Year</span>
-            <span>{birthYear}</span>
-          </li>
-          <li className="list-group-item">
-            <span className="term">Eye Color</span>
-            <span>{eyeColor}</span>
-          </li>
-        </ul>
-        <ErrorButton />
-      </div>
-    </React.Fragment>
-  );
+            <div className="card-body">
+                <h4>{name}</h4>
+                <ul className="list-group list-group-flush">
+                    <li className="list-group-item">
+                        <span className="term">Gender</span>
+                        <span>{gender}</span>
+                    </li>
+                    <li className="list-group-item">
+                        <span className="term">Birth Year</span>
+                        <span>{birthYear}</span>
+                    </li>
+                    <li className="list-group-item">
+                        <span className="term">Eye Color</span>
+                        <span>{eyeColor}</span>
+                    </li>
+                </ul>
+                <ErrorButton/>
+            </div>
+        </React.Fragment>
+    );
 };
