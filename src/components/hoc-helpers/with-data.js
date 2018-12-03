@@ -9,12 +9,22 @@ const withData = (View) => {
             isLoading: true
         };
 
+        componentDidUpdate(prevProps) {
+            if (this.props.getData !== prevProps.getData) {
+                this.update();
+            }
+        }
+
         componentDidMount() {
+            this.update();
+        };
+
+        update() {
             this.props.getData()
                 .then(data => {
                     this.setState({data, isLoading: false});
                 })
-        };
+        }
 
         render() {
             const {data} = this.state;

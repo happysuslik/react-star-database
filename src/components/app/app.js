@@ -5,10 +5,9 @@ import RandomPlanet from "../random-planet";
 import "./app.css";
 import Row from "../row/row";
 import SwapiService from "../../services/swapi-service";
+import DummySwapiService from "../../services/dummy-swapi-service";
 
 import {SwapiServiceProvider} from "../swapi-service-context";
-
-
 import {
     PersonList,
     StarshipList,
@@ -20,19 +19,27 @@ import {
 import ErrorBoundary from "../error-boundry/error-boundary";
 
 export default class App extends Component {
-    swapiService = new SwapiService();
+    state = {
+        swapiService: new SwapiService()
+    };
+    onServiceChange = () => {
+        this.setState(({swapiService}) => {
+            const Service = swapiService instanceof SwapiService ? DummySwapiService : SwapiService;
+            return {
+                swapiService: new Service()
+            };
+        });
+    };
 
     render() {
         return (
             <ErrorBoundary>
-                <SwapiServiceProvider value={this.swapiService}>
+                <SwapiServiceProvider value={this.state.swapiService}>
                     <div className="container">
-                        <AppHeader/>
+                        <AppHeader onServiceChange={this.onServiceChange}/>
                         <RandomPlanet/>
-                        <Row left={
-                            <PersonList/>
-                        } right={<PersonDetails itemId={22}/>}/>
-
+                        <Row left={<PersonList/>}
+                             right={<PersonDetails itemId={22}/>}/>
                     </div>
                 </SwapiServiceProvider>
             </ErrorBoundary>
