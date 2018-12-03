@@ -21,7 +21,6 @@ export {
 };
 
 export default class ItemDetails extends Component {
-    swapiService = new SwapiService();
 
     state = {
         item: null,

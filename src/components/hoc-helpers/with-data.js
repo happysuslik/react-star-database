@@ -18,7 +18,6 @@ const withData = (View, getData) => {
 
         render() {
             const {data} = this.state;
-
             if (!data) {
                 return <Spinner/>;
             }
