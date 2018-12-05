@@ -1,8 +1,5 @@
 import React, {Component} from "react";
-
-import SwapiService from "./../../services/swapi-service";
 import Spinner from "../spinner";
-import ErrorIndicator from "../error-indicator";
 import ErrorButton from "../error-button";
 
 import "./item-details.css";
@@ -25,7 +22,7 @@ export default class ItemDetails extends Component {
     state = {
         item: null,
         image: null,
-        isLoading: true,
+        isLoading: false,
         isError: false
     };
 
@@ -56,18 +53,11 @@ export default class ItemDetails extends Component {
                     isLoading: false
                 })
             })
-            .catch(err => {
-                this.onError(err);
-            });
     }
-
-    onError = err => {
-        this.setState({isError: true, isLoading: false});
-    };
 
     render() {
         const {item, image, isLoading, isError} = this.state;
-        const loader = isLoading && !isError ? <Spinner/> : null;
+        const loader = isLoading && !isError ? <Spinner/> : <span>Select a item from a list</span>;
 
         if (!item) {
             return <span>{loader}</span>;

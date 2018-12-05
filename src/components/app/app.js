@@ -3,20 +3,11 @@ import React, {Component} from "react";
 import AppHeader from "../header";
 import RandomPlanet from "../random-planet";
 import "./app.css";
-import Row from "../row/row";
 import SwapiService from "../../services/swapi-service";
 import DummySwapiService from "../../services/dummy-swapi-service";
-
 import {SwapiServiceProvider} from "../swapi-service-context";
-import {
-    PersonList,
-    StarshipList,
-    PlanetList,
-    PersonDetails,
-    StarshipDetails,
-    PlanetDetails
-} from '../sw-components';
 import ErrorBoundary from "../error-boundry/error-boundary";
+import { PeoplePage, StarshipsPage, PlanetsPage } from "../pages";
 
 export default class App extends Component {
     state = {
@@ -38,8 +29,9 @@ export default class App extends Component {
                     <div className="container">
                         <AppHeader onServiceChange={this.onServiceChange}/>
                         <RandomPlanet/>
-                        <Row left={<PersonList/>}
-                             right={<PersonDetails itemId={22}/>}/>
+                        <PeoplePage/>
+                        <StarshipsPage/>
+                        <PlanetsPage/>
                     </div>
                 </SwapiServiceProvider>
             </ErrorBoundary>
