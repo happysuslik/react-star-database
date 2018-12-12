@@ -11,6 +11,7 @@ import {PeoplePage, StarshipsPage, PlanetsPage} from "../pages";
 import {BrowserRouter as Router, Route} from 'react-router-dom';
 
 import "./app.css";
+import StarshipDetails from "../sw-components/starship-details";
 
 export default class App extends Component {
     state = {
@@ -39,7 +40,12 @@ export default class App extends Component {
                                    exact/>
                             <Route path="/people" component={PeoplePage} />
                             <Route path="/planets" component={PlanetsPage} />
-                            <Route path="/starships" component={StarshipsPage} />
+                            <Route path="/starships" exact component={StarshipsPage} />
+                            <Route path="/starships/:id"
+                                   render={({match}) => {
+                                       const { id } = match.params;
+                                       return <StarshipDetails itemId={id}/>
+                                   }}/>
 
                         </div>
                     </Router>
