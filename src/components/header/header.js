@@ -21,6 +21,12 @@ const AppHeader = ({onServiceChange}) => {
                 <li>
                     <Link to="/starships/">Starships</Link>
                 </li>
+                <li>
+                    <Link to="/login">Login</Link>
+                </li>
+                <li>
+                    <Link to="/secret">Secret</Link>
+                </li>
             </ul>
 
             <button
