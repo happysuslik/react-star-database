@@ -4,12 +4,9 @@ import { withRouter } from 'react-router-dom';
 
 import "./starships-page.css";
 
-
 const StarshipsPage = ({ history }) => {
     return (
-        <StarshipList onItemSelected={(itemId) => {
-            history.push(`/starships/${itemId}`)
-        }}/>
+        <StarshipList onItemSelected={(itemId) => history.push(itemId)}/>
     );
 };
 
