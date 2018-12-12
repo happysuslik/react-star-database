@@ -41,47 +41,49 @@ export default class App extends Component {
         const {isLoggedIn} = this.state;
 
         return (
-            <ErrorBoundary>
-                <SwapiServiceProvider value={this.state.swapiService}>
-                    <Router>
-                        <div className="container">
-                            <AppHeader onServiceChange={this.onServiceChange}/>
+
+            <SwapiServiceProvider value={this.state.swapiService}>
+                <Router>
+                    <div className="container">
+                        <AppHeader onServiceChange={this.onServiceChange}/>
+                        <ErrorBoundary>
                             <RandomPlanet/>
+                        </ErrorBoundary>
 
-                            <Switch>
-                                <Route path="/"
-                                       render={() => <h2>Welcome to StarDB</h2>}
-                                       exact/>
+                        <Switch>
+                            <Route path="/"
+                                   render={() => <h2>Welcome to StarDB</h2>}
+                                   exact/>
 
-                                <Route path="/people/:id?" component={PeoplePage}/>
-                                <Route path="/planets" component={PlanetsPage}/>
-                                <Route path="/starships" exact component={StarshipsPage}/>
-                                <Route path="/starships/:id"
-                                       render={({match}) => {
-                                           const {id} = match.params;
-                                           return <StarshipDetails itemId={id}/>
-                                       }}/>
-                                <Route path='/login'
-                                       render={() => (
-                                           <LoginPage
-                                               isLoggedIn={isLoggedIn}
-                                               onLogin={this.onLogin}
-                                           />
-                                       )}
-                                />
-                                <Route path='/secret'
-                                       render={() => (
-                                           <SecretPage isLoggedIn={isLoggedIn}/>
-                                       )}
-                                />
+                            <Route path="/people/:id?" component={PeoplePage}/>
+                            <Route path="/planets" component={PlanetsPage}/>
+                            <Route path="/starships" exact component={StarshipsPage}/>
+                            <Route path="/starships/:id"
+                                   render={({match}) => {
+                                       const {id} = match.params;
+                                       return <StarshipDetails itemId={id}/>
+                                   }}/>
+                            <Route path='/login'
+                                   render={() => (
+                                       <LoginPage
+                                           isLoggedIn={isLoggedIn}
+                                           onLogin={this.onLogin}
+                                       />
+                                   )}
+                            />
+                            <Route path='/secret'
+                                   render={() => (
+                                       <SecretPage isLoggedIn={isLoggedIn}/>
+                                   )}
+                            />
 
-                                <Route render={() => <h2>Page not found</h2>}/>
-                            </Switch>
+                            <Route render={() => <h2>Page not found</h2>}/>
+                        </Switch>
 
-                        </div>
-                    </Router>
-                </SwapiServiceProvider>
-            </ErrorBoundary>
+                    </div>
+                </Router>
+            </SwapiServiceProvider>
+
         );
     }
 }

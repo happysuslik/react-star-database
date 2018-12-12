@@ -3,6 +3,7 @@ import Spinner from "../spinner";
 import ErrorButton from "../error-button";
 
 import "./item-details.css";
+import ErrorBoundary from "../error-boundry/error-boundary";
 
 const Record = ({item, field, label}) => {
     return (
@@ -66,25 +67,27 @@ export default class ItemDetails extends Component {
         const {name} = item;
 
         return (
-            <div className="item-details card">
-                <img
-                    className="item-image"
-                    src={image}
-                    alt="item"
-                />
+            <ErrorBoundary>
+                <div className="item-details card">
+                    <img
+                        className="item-image"
+                        src={image}
+                        alt="item"
+                    />
 
-                <div className="card-body">
-                    <h4>{name}</h4>
-                    <ul className="list-group list-group-flush">
-                        {
-                            React.Children.map(this.props.children, (child) => {
-                                return React.cloneElement(child, {item});
-                            })
-                        }
-                    </ul>
-                    <ErrorButton/>
+                    <div className="card-body">
+                        <h4>{name}</h4>
+                        <ul className="list-group list-group-flush">
+                            {
+                                React.Children.map(this.props.children, (child) => {
+                                    return React.cloneElement(child, {item});
+                                })
+                            }
+                        </ul>
+                        <ErrorButton/>
+                    </div>
                 </div>
-            </div>
+            </ErrorBoundary>
         );
     }
 }
