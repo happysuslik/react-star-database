@@ -2,7 +2,9 @@
   "name": "star-database",
   "version": "0.1.0",
   "private": true,
+  "main": "server.js",
   "dependencies": {
+    "express": "^4.16.4",
     "prop-types": "^15.6.2",
     "react": "^16.6.0",
     "react-dom": "^16.6.0",
@@ -11,8 +13,8 @@
   },
   "scripts": {
     "start-local": "react-scripts start",
-    "start": "serve -s build",
-    "build": "react-scripts build -p",
+    "start": "node server.js",
+    "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
