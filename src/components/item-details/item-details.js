@@ -68,22 +68,30 @@ export default class ItemDetails extends Component {
 
         return (
             <ErrorBoundary>
-                <div className="item-details card">
-                    <img
-                        className="item-image"
-                        src={image}
-                        alt="item"
-                    />
+                <div className="card border-secondary mb-3">
+                    <div className="card-header bg-transparent border-secondary">Details</div>
+                    <div className="card-body text-dark">
+                        <div className="item-details card">
+                            <img
+                                className="item-image"
+                                src={image}
+                                alt="item"
+                            />
 
-                    <div className="card-body">
-                        <h4>{name}</h4>
-                        <ul className="list-group list-group-flush">
-                            {
-                                React.Children.map(this.props.children, (child) => {
-                                    return React.cloneElement(child, {item});
-                                })
-                            }
-                        </ul>
+                            <div className="card-body">
+                                <h4 className="card-title">{name}</h4>
+                                <ul className="list-group list-group-flush">
+                                    {
+                                        React.Children.map(this.props.children, (child) => {
+                                            return React.cloneElement(child, {item});
+                                        })
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="card-footer bg-transparent border-secondary d-flex justify-content-between">
+                        <span>Test generation error button</span>
                         <ErrorButton/>
                     </div>
                 </div>

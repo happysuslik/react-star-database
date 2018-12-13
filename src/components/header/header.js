@@ -2,7 +2,11 @@ import React from "react";
 import { Link } from 'react-router-dom';
 import "./header.css";
 
-const AppHeader = ({onServiceChange}) => {
+const AppHeader = ({isLoggedIn}) => {
+    const login = <Link to="/login">Login</Link>;
+    const logout = <Link to="/logout">Logout</Link>;
+    const displayAuthLink = isLoggedIn ? logout : login;
+
     return (
         <div className="header d-flex">
             <h3>
@@ -22,17 +26,12 @@ const AppHeader = ({onServiceChange}) => {
                     <Link to="/starships/">Starships</Link>
                 </li>
                 <li>
-                    <Link to="/login">Login</Link>
-                </li>
-                <li>
                     <Link to="/secret">Secret</Link>
                 </li>
+                <li>
+                    {displayAuthLink}
+                </li>
             </ul>
-
-            <button
-                className={"btn btn-primary btn-sm"}
-                onClick={onServiceChange}>Change Service
-            </button>
         </div>
     );
 };

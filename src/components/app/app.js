@@ -3,21 +3,20 @@ import React, {Component} from "react";
 import AppHeader from "../header";
 import RandomPlanet from "../random-planet";
 import SwapiService from "../../services/swapi-service";
-import DummySwapiService from "../../services/dummy-swapi-service";
 import {SwapiServiceProvider} from "../swapi-service-context";
 import ErrorBoundary from "../error-boundry/error-boundary";
-import {PeoplePage, StarshipsPage, PlanetsPage} from "../pages";
+import {PeoplePage, PlanetsPage, StarshipsPage} from "../pages";
 
 import {BrowserRouter as Router, Route, Switch, Redirect} from 'react-router-dom';
-
-import "./app.css";
 import StarshipDetails from "../sw-components/starship-details";
-import LoginPage from "../pages/login-page/login-page";
 import SecretPage from "../pages/secret-page/secret-page";
 
+import "./app.css";
+import LoginPage from "../pages/login-page/login-page";
+
 export default class App extends Component {
+    swapiService = new SwapiService();
     state = {
-        swapiService: new SwapiService(),
         isLoggedIn: false
     };
 
@@ -27,25 +26,20 @@ export default class App extends Component {
         })
     };
 
-    onServiceChange = () => {
-        this.setState(({swapiService}) => {
-            const Service = swapiService instanceof SwapiService ? DummySwapiService : SwapiService;
-            return {
-                swapiService: new Service()
-            };
-        });
+    onLogout = () => {
+        this.setState({
+            isLoggedIn: false
+        })
     };
 
     render() {
-
         const {isLoggedIn} = this.state;
 
         return (
-
-            <SwapiServiceProvider value={this.state.swapiService}>
+            <SwapiServiceProvider value={this.swapiService}>
                 <Router>
                     <div className="container">
-                        <AppHeader onServiceChange={this.onServiceChange}/>
+                        <AppHeader isLoggedIn={isLoggedIn}/>
                         <ErrorBoundary>
                             <RandomPlanet/>
                         </ErrorBoundary>
@@ -70,6 +64,12 @@ export default class App extends Component {
                                            onLogin={this.onLogin}
                                        />
                                    )}
+                            />
+                            <Route path='/logout'
+                                   render={() => {
+                                       this.onLogout();
+                                       return <Redirect to="/"/>
+                                   }}
                             />
                             <Route path='/secret'
                                    render={() => (

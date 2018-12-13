@@ -3,6 +3,11 @@ import Spinner from "../spinner";
 import React from "react";
 import ErrorIndicator from "../error-indicator/error-indicator";
 
+/**
+ * Logic work with network
+ * @param View - Component
+ * @returns {{new(): {state, componentDidUpdate(*): void, update(): void, render(): *, componentDidMount(): void}, prototype: {state, componentDidUpdate(*): void, update(): void, render(): *, componentDidMount(): void}}}
+ */
 const withData = (View) => {
     return class extends Component {
         state = {
